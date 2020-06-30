@@ -1,0 +1,69 @@
+{% extends 'web/main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="content-wrapper">
+  <div class="content-header">
+    <div class="container-fluid">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'home' %}">Beranda</a></li>
+          <li class="breadcrumb-item"><a href="#">Pengaduan Selesai</a></li>
+        </ol>
+      </nav>
+
+      <br>
+
+      <div class="row">
+        <div class="card-body">
+          <div class="input-group">
+            <form class="form-inline" action="" method="get">
+              <span>
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" size="50">
+                <input class="btn" type="submit" style="background: #467aff; color: white; width: max-content" value="Cari">
+              </span>
+            </form>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md">
+              <div class="card card-body">
+                <table class="table table-sm">
+                  <tr>
+                    <th><input type="checkbox" aria-label="Checkbox for following text input"></th>
+                    <th>Tgl Pengaduan</th>
+                    <th>Client</th>
+                    <th>Masalah</th>
+                    <th>Kategori Penaganan</th>
+                    <th>Aksi</th>
+                  </tr>
+
+                  {% for a in penanganan1 %}
+                  <tr>
+                    <td><input type="checkbox" aria-label="Checkbox for following text input"></td>
+                    <td>{{a.date_created}}</td>
+                    <td>{{a.client.nama}}</td>
+                    <td>{{a.masalah.nama}}</td>
+                    <td>{{a.status}}</td>
+                    <td>
+                      <form action="{% url 'deletePeng' a.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+
+                      </form>
+                    </td>
+                  </tr>
+                  {% endfor %}
+
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        </div>
+      </div><!-- /.container-fluid -->
+    </div>
+  </div>
+
+  {% endblock %}
