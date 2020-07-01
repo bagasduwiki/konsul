@@ -30,19 +30,19 @@
                 <div class="form-group row">
                   <label for="tglpengaduan" class="col-sm-2 col-form-label">Tgl Pengaduan</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="tglpengaduan" value="{{penanganan.date_created}}">
+                    <input type="text" class="form-control" id="tglpengaduan" value="{{penanganan.date_created}}" disabled>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="ktgpengaduan" class="col-sm-2 col-form-label">Kategori Pengaduan</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="ktgpengaduan" value="{{penanganan.masalah}}">
+                    <input type="text" class="form-control" id="ktgpengaduan" value="{{penanganan.masalah}}" disabled>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="keterangan" class="col-sm-2 col-form-label">Keterangan</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="keterangan" value="{{penanganan.status}}">
+                    <input type="text" class="form-control" id="keterangan" value="{{penanganan.status}}" disabled>
                   </div>
                 </div>
               </form>
@@ -50,7 +50,7 @@
           </div>
         </div>
 
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-md">
             <div class="card card-body">
               <div class="input-group">
@@ -58,16 +58,38 @@
             </div>
             </div>
           </div>
+        </div> -->
+
+        <div class="row">
+          <div class="col-md">
+            <div class="card card-body">
+              <form method="POST" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form}}
+                <br>
+                <input class="btn btn-sm btn-info" type="submit" name="Kirim Solusi" value="Kirim Solusi">
+              </form>
+            </div>
+          </div>
         </div>
 
-          <div class="row">
-            <div class="col-md-4">
-              <a class="btn btn-sm btn-success" type="submit" href="">Selesai</a>
-              <a class="btn btn-sm btn-info" type="submit" href="">Kirim</a>
-            </div>
-          </div><!-- /.container-fluid -->
         </div>
         </section>
         </div>
+
+//Query All input fields
+<script>
+var select_fields = document.getElementsByTagName('select')
+
+var input_fields = document.getElementsByTagName('input')
+
+
+for (var field in select_fields){
+  select_fields[field].className += ' form-control'
+}
+for (var field in input_fields){
+  input_fields[field].className += ' form-control'
+}
+</script>
 
 {% endblock %}

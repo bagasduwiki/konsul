@@ -18,7 +18,13 @@ class AdminForm(ModelForm):
 class PenangananForm(ModelForm):
     class Meta:
         model = Penanganan
+        fields = ['solusi']
+
+class StatusForm(ModelForm):
+    class Meta:
+        model = Penanganan
         fields = '__all__'
+        exclude = ['solusi']
 
 class MasalahForm(ModelForm):
     class Meta:

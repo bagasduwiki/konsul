@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from django.contrib import messages
 
-from .forms import CreateUserForm, AdminForm, PenangananForm, MasalahForm
+from .forms import CreateUserForm, AdminForm, PenangananForm, MasalahForm, StatusForm
 from .models import *
 from .filters import PengaduanFilter
 from .decorators import unauthenticated_user, allowed_users, admin_only
@@ -62,12 +62,14 @@ def home(request):
     tot_client = client.count()
     tot_penanganan = penanganan.count()
     tot_selesai = penanganan.filter(status='Selesai').count()
-    tot_proses = penanganan.filter(status='Online').count()
+    tot_online = penanganan.filter(status='Online').count()
+    tot_tkp = penanganan.filter(status='TKP').count()
+    tot_prog = tot_online + tot_tkp
 
     myFilter = PengaduanFilter()
 
     context = {'penanganan':penanganan, 'client':client, 'tot_client':tot_client, 'tot_penanganan':tot_penanganan,
-    'tot_selesai':tot_selesai, 'tot_proses':tot_proses, 'myFilter': myFilter}
+    'tot_selesai':tot_selesai, 'tot_prog':tot_prog, 'myFilter': myFilter}
     return render(request, 'web/dashboard.html', context)
 
 @login_required(login_url='login')
@@ -89,15 +91,15 @@ def det_penanganan(request, pk):
 @allowed_users(allowed_roles=['admin'])
 def edit_status(request, pk):
     penanganan = Penanganan.objects.get(id=pk)
-    form = PenangananForm(instance=penanganan)
+    form = StatusForm(instance=penanganan)
     if request.method == 'POST':
-        form = PenangananForm(request.POST, instance=penanganan)
+        form = StatusForm(request.POST, instance=penanganan)
         if form.is_valid():
             form.save()
             messages.success(request, 'Data Berhasil Diubah')
             return redirect('/')
 
-    context = {'form':form}
+    context = {'form':form, 'penanganan':penanganan}
     return render(request, 'web/edit_status.html', context)
 
 @login_required(login_url='login')

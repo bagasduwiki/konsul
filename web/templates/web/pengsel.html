@@ -30,21 +30,21 @@
               <div class="card card-body">
                 <table class="table table-sm">
                   <tr>
-                    <th><input type="checkbox" aria-label="Checkbox for following text input"></th>
                     <th>Tgl Pengaduan</th>
                     <th>Client</th>
                     <th>Masalah</th>
                     <th>Kategori Penaganan</th>
+                    <th>Solusi</th>
                     <th>Aksi</th>
                   </tr>
 
                   {% for a in penanganan1 %}
                   <tr>
-                    <td><input type="checkbox" aria-label="Checkbox for following text input"></td>
                     <td>{{a.date_created}}</td>
                     <td>{{a.client.nama}}</td>
                     <td>{{a.masalah.nama}}</td>
                     <td>{{a.status}}</td>
+                    <td>{{a.solusi}}</td>
                     <td>
                       <form action="{% url 'deletePeng' a.id %}" method="post">
                         {% csrf_token %}
