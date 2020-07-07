@@ -12,48 +12,50 @@
         </ol>
       </nav>
 
-      <br>
-
       <div class="row">
         <div class="card-body">
-          <div class="input-group">
+          <!-- <div class="input-group">
             <form class="form-inline" action="" method="get">
               <span>
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" size="50">
                 <input class="btn" type="submit" style="background: #467aff; color: white; width: max-content" value="Cari">
               </span>
             </form>
-          </div>
+          </div> -->
           <br>
           <div class="row">
             <div class="col-md">
               <div class="card card-body">
-                <table class="table table-sm">
-                  <tr>
-                    <th>Tgl Pengaduan</th>
-                    <th>Client</th>
-                    <th>Masalah</th>
-                    <th>Kategori Penaganan</th>
-                    <th>Solusi</th>
-                    <th>Aksi</th>
-                  </tr>
+                <table class="table table-striped" id="table2">
+                  <thead>
+                    <tr class="bg-info">
+                      <th>Tgl Pengaduan</th>
+                      <th>Client</th>
+                      <th>Masalah</th>
+                      <th>Kategori Penaganan</th>
+                      <th>Solusi</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
 
-                  {% for a in penanganan1 %}
-                  <tr>
-                    <td>{{a.date_created}}</td>
-                    <td>{{a.client.nama}}</td>
-                    <td>{{a.masalah.nama}}</td>
-                    <td>{{a.status}}</td>
-                    <td>{{a.solusi}}</td>
-                    <td>
-                      <form action="{% url 'deletePeng' a.id %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                  <tbody>
+                    {% for a in penanganan1 %}
+                    <tr>
+                      <td>{{a.date_created}}</td>
+                      <td>{{a.client.nama}}</td>
+                      <td>{{a.masalah.nama}}</td>
+                      <td>{{a.status}}</td>
+                      <td>{{a.solusi}}</td>
+                      <td>
+                        <form action="{% url 'deletePeng' a.id %}" method="post">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
 
-                      </form>
-                    </td>
-                  </tr>
-                  {% endfor %}
+                        </form>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
 
                 </table>
               </div>
@@ -66,4 +68,9 @@
     </div>
   </div>
 
+  <script type="text/javascript">
+    $(document).ready( function () {
+      $('#table2').DataTable();
+      } );
+  </script>
   {% endblock %}

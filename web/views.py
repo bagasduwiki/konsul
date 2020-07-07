@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
+from django.db.models import Q
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -68,8 +69,10 @@ def home(request):
 
     myFilter = PengaduanFilter()
 
+    stat_online = penanganan.filter(Q(status='TKP') | Q(status='Online'))
+
     context = {'penanganan':penanganan, 'client':client, 'tot_client':tot_client, 'tot_penanganan':tot_penanganan,
-    'tot_selesai':tot_selesai, 'tot_prog':tot_prog, 'myFilter': myFilter}
+    'tot_selesai':tot_selesai, 'tot_prog':tot_prog, 'myFilter': myFilter, 'stat_online':stat_online}
     return render(request, 'web/dashboard.html', context)
 
 @login_required(login_url='login')

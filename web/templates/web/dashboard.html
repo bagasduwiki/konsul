@@ -6,64 +6,51 @@
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <br>
-    <!-- Content Header (Page header) -->
-    <!-- <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Dashboard</h1>
-          </div>
-        </div>
-        <br>
-      </div><!-- /.container-fluid -->
-    <!-- </div> -->
-    <!-- /.content-header -->
 
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         {% include 'web/status.html' %}
         <div class="row">
-          <div class="card-body">
-            <div class="input-group">
+          <div class="col">
+            <!-- <div class="input-group">
               <form class="form-inline" action="" method="get">
                 <span>
-                  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" size="50">
-                  <input class="btn" type="submit" style="background: #467aff; color: white; width: max-content" value="Cari">
+                  <input id="filterInput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" size="50">
                 </span>
               </form>
-            </div>
+            </div> -->
             <br>
               <div class="row">
                 <div class="col-md">
                   <div class="card card-body">
-                    <table class="table table-sm">
-                      <tr>
-                        <!-- <th><input type="checkbox" aria-label="Checkbox for following text input"></th> -->
-                        <th>Tgl Pengaduan</th>
-                        <th>Client</th>
-                        <th>Masalah</th>
-                        <th>Kategori Penanganan</th>
-                        <th>Aksi</th>
-                      </tr>
+                    <table class="table table-striped" id="tablebarang">
+                      <thead>
+                        <tr class="bg-info">
+                          <th class="bg-info" data-colname="tglpengaduan" data-order="desc">Tgl Pengaduan</th>
+                          <th data-colname="client" data-order="desc">Client</th>
+                          <th data-colname="masalah" data-order="desc">Masalah</th>
+                          <th data-colname="kategori" data-order="desc">Kategori Penanganan</th>
+                          <th>Aksi</th>
+                        </tr>
+                      </thead>
 
-                      {% for penanganan in penanganan %}
-                      <tr>
-                        <!-- <td><input type="checkbox" aria-label="Checkbox for following text input"></td> -->
-                        <td>{{penanganan.date_created}}</td>
-                        <td>{{penanganan.client.nama}}</td>
-                        <td>{{penanganan.masalah.nama}}</td>
-                        <td>{{penanganan.status}}</td>
-                        <td>
-                        <!-- <a class="btn btn-sm btn-info" id="button" href="#">Edit COba</a> -->
-                        <a class="btn btn-sm btn-info" href="{% url 'edit_status' penanganan.id %}">Edit</a>
-                        <a class="btn btn-sm btn-success" href="{% url 'det_penanganan' penanganan.id %}">Detail</a></td>
-                      </tr>
-                      {% endfor %}
+                      <tbody>
+                        {% for penanganan in stat_online %}
+                        <tr>
+                          <td>{{penanganan.date_created}}</td>
+                          <td>{{penanganan.client.nama}}</td>
+                          <td>{{penanganan.masalah.nama}}</td>
+                          <td>{{penanganan.status}}</td>
+                          <td>
+                          <a class="btn btn-sm btn-info" href="{% url 'edit_status' penanganan.id %}">Edit</a>
+                          <a class="btn btn-sm btn-success" href="{% url 'det_penanganan' penanganan.id %}">Detail</a></td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
 
                     </table>
                   </div>
-                  <p>Total : {{tot_penanganan}} Pengaduan</p>
                 </div>
               </div>
             </div>
@@ -72,20 +59,6 @@
           </div><!-- /.container-fluid -->
 
         </section>
-        </div>
-        <div class="bg-modal">
-          <div class="modal-content">
-            <div class="close">+</div>
-            <h3>Edit Status</h3>
-            <br>
-            <form method="POST" enctype="multipart/form-data">
-              {% csrf_token %}
-              <input type="text" name="Coba">
-              <br>
-              <br>
-              <input class="btn btn-sm btn-info" type="submit" name="Update Status" value="Update Status">
-            </form>
-          </div>
         </div>
 
 <script type="text/javascript">
@@ -97,4 +70,11 @@
     document.querySelector('.bg-modal').style.display = 'none';
   });
 </script>
+
+<script type="text/javascript">
+  $(document).ready( function () {
+    $('#tablebarang').DataTable();
+    } );
+</script>
+
 {% endblock %}
