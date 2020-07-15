@@ -1,0 +1,87 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <br>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <h3>Tabel Pengaduan</h3>
+        <a class="btn btn-md btn-info" href="{% url 'tambahpelayanan' %}">Tambah Pengaduan</a>
+        <div class="row">
+          <div class="col"><br>
+            <!-- <div class="card card-body">
+              <form method="POST">
+                {% csrf_token %}
+                {{myFilter.form}}
+                <button class="btn btn-primary" type="submit">Cari</button>
+              </form>
+            </div> -->
+              <div class="row">
+                <div class="col-md">
+                  <div class="card card-body">
+                    <table class="table table-striped" id="tablepelayanan">
+                      <thead>
+                        <tr class="bg-info text-center">
+                          <th class="bg-info" data-colname="tglpengaduan" data-order="desc">Tgl Pengaduan</th>
+                          <th data-colname="client" data-order="desc">Klien</th>
+                          <th data-colname="masalah" data-order="desc">Keluhan</th>
+                          <th data-colname="kategori" data-order="desc">Status Penanganan</th>
+                          <!-- <th data-colname="kategori" data-order="desc">Status Pengaduan</th> -->
+                          <th>Kelola</th>
+                          <th>Hapus</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        {% for pengaduan in pengaduan %}
+                        <tr class="text-center">
+                          <td>{{pengaduan.date_created}}</td>
+                          <td>{{pengaduan.client}}</td>
+                          <td>{{pengaduan.keluhan}}</td>
+                          <td>{{pengaduan.kategori_penanganan}}</td>
+                          <!-- <td>{{pengaduan.selesai}}</td> -->
+                          <td>
+                          <a class="btn btn-sm btn-info" href="{% url 'editstatus' pengaduan.id %}">Edit</a>
+                          <a class="btn btn-sm btn-success" href="{% url 'detailpelayanan' pengaduan.id %}">Detail</a></td>
+                          <td><form action="{% url 'deletepelayanan' pengaduan.id %}" method="post">
+                              {% csrf_token %}
+                              <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                              </form>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            </div>
+          </div><!-- /.container-fluid -->
+
+        </section>
+        </div>
+
+<script type="text/javascript">
+  document.getElementById('button').addEventListener('click', function(){
+    document.querySelector('.bg-modal').style.display = 'flex';
+  });
+
+  document.querySelector('.close').addEventListener('click', function(){
+    document.querySelector('.bg-modal').style.display = 'none';
+  });
+</script>
+
+<script type="text/javascript">
+    $(document).ready( function () {
+      $('#tablepelayanan').DataTable();
+      } );
+</script>
+{% endblock %}

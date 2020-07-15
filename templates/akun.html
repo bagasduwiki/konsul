@@ -1,0 +1,57 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="content-wrapper">
+  <!-- <div class="content-header">
+    <div class="container-fluid">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="">Beranda</a></li>
+          <li class="breadcrumb-item"><a href="#">Akun</a></li>
+        </ol>
+      </nav>
+      </div>
+    </div> -->
+    <br>
+      <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <h3>Edit Profile</h3>
+          <div class="row">
+            <div class="col-md-12">
+              <a class="btn btn-md btn-info" href="{% url 'ubahpassword' %}">Ubah Password</a>
+              <br>
+              <div class="card card-body">
+                <form method="POST" action="" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{form.as_p}}
+                  <input class="btn btn-primary" type="submit" name="Update Information">
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        </section><!-- /.container-fluid -->
+
+
+
+
+        </div>
+
+//Query All input fields
+<script>
+var select_fields = document.getElementsByTagName('select')
+
+var input_fields = document.getElementsByTagName('input')
+
+
+for (var field in select_fields){
+  select_fields[field].className += ' form-control'
+}
+for (var field in input_fields){
+  input_fields[field].className += ' form-control'
+}
+</script>
+
+{% endblock %}

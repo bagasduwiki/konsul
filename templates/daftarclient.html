@@ -1,0 +1,81 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <br>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <h3>Daftar Klien</h3>
+        <a class="btn btn-md btn-info" href="{% url 'tambahuser' %}">Tambah User</a>
+        <a class="btn btn-md btn-info" href="{% url 'tambahclient' %}">Tambah Klien</a>
+        <div class="row">
+          <div class="col">
+            <br>
+              <div class="row">
+                <div class="col-md">
+                  <div class="card card-body">
+                    <table class="table table-striped" id="tableclient">
+                      <thead>
+                        <tr class="bg-info text-center">
+                          <th class="bg-info" data-colname="tglpengaduan" data-order="desc">Nama Klien</th>
+                          <th data-colname="client" data-order="desc">No.Hp</th>
+                          <th data-colname="kategori" data-order="desc">Email</th>
+                          <th data-colname="kategori" data-order="desc">Instansi</th>
+                          <th data-colname="masalah" data-order="desc">Alamat</th>
+                          <th>Detail</th>
+                          <th>Hapus</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        {% for client in client %}
+                        <tr class="text-center">
+                          <td>{{client.nama}}</td>
+                          <td>{{client.no_hp}}</td>
+                          <td>{{client.email}}</td>
+                          <td>{{client.instansi}}</td>
+                          <td>{{client.alamat}}</td>
+                          <td>
+                          <a class="btn btn-sm btn-info" href="{% url 'detailclient' client.id %}">Detail</a>
+                          </td>
+                          <td><form action="{% url 'deleteclient' client.id %}" method="post">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                        </form></td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            </div>
+          </div><!-- /.container-fluid -->
+
+        </section>
+        </div>
+
+<script type="text/javascript">
+  document.getElementById('button').addEventListener('click', function(){
+    document.querySelector('.bg-modal').style.display = 'flex';
+  });
+
+  document.querySelector('.close').addEventListener('click', function(){
+    document.querySelector('.bg-modal').style.display = 'none';
+  });
+</script>
+
+<script type="text/javascript">
+    $(document).ready( function () {
+      $('#tableclient').DataTable();
+      } );
+  </script>
+{% endblock %}

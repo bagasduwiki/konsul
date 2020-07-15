@@ -1,0 +1,146 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <!-- <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="">Beranda</a></li>
+            <li class="breadcrumb-item"><a href="#">Detail Pengaduan</a></li>
+          </ol>
+        </nav> -->
+
+    <br>
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md">
+            <h3>Detail Pengaduan</h3>
+            <div class="card card-body">
+              <form>
+                {% csrf_token %}
+                <div class="form-group row">
+                  <label for="tglpengaduan" class="col-sm-2 col-form-label">Nama Klien</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="tglpengaduan" value="{{pengaduan.client}}" disabled>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="tglpengaduan" class="col-sm-2 col-form-label">Tgl Pengaduan</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="tglpengaduan" value="{{pengaduan.date_created}}" disabled>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="ktgpengaduan" class="col-sm-2 col-form-label">Kategori Pengaduan</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="ktgpengaduan" value="{{pengaduan.kategori_pengaduan}}" disabled>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="keterangan" class="col-sm-2 col-form-label">Status Penanganan</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="keterangan" value="{{pengaduan.kategori_penanganan}}" disabled>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="card direct-chat direct-chat-primary">
+              <div class="card-header">
+                <h3 class="card-title">Direct Chat</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <!-- Conversations are loaded here -->
+                <div class="direct-chat-messages">
+                  <!-- Message. Default to the left -->
+                  <div class="direct-chat-msg">
+                    <div class="direct-chat-infos clearfix">
+                      <span class="direct-chat-name float-left">User</span>
+                    </div>
+                    <!-- /.direct-chat-infos -->
+                    <!-- <img class="direct-chat-img" src="{% static 'img/accounts.png' %}" alt="message user image"> -->
+                    <div class="direct-chat-text">
+                      {{pengaduan.keluhan}}
+                    </div>
+                    <!-- <span class="direct-chat-timestamp float-left">23 Jan 2:00 pm</span> -->
+                    <!-- /.direct-chat-text -->
+                  </div>
+                  <!-- /.direct-chat-msg -->
+
+                  <!-- Message to the right -->
+                  <div class="direct-chat-msg right">
+                    <div class="direct-chat-infos clearfix">
+                      <span class="direct-chat-name float-right">Admin</span>
+                    </div>
+                    <!-- /.direct-chat-infos -->
+                    <!-- <img class="direct-chat-img" src="{% static 'img/user3-128x128.jpg' %}" alt="message user image"> -->
+                    <div class="direct-chat-text">
+                      {{respon.respon}}
+                    </div>
+                    <!-- <span class="direct-chat-timestamp float-right">23 Jan 2:05 pm</span> -->
+                    <!-- /.direct-chat-text -->
+                  </div>
+                  <!-- /.direct-chat-msg -->
+                </div>
+                <!--/.direct-chat-messages-->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer">
+                <form action="#" method="post">
+                  <div class="input-group">
+                    <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                    <span class="input-group-append">
+                      <button type="button" class="btn btn-primary">Send</button>
+                    </span>
+                  </div>
+                </form>
+              </div>
+              <!-- /.card-footer-->
+            </div>
+
+        <!-- <div class="row">
+          <div class="col-md">
+            <div class="card card-body">
+              <label for="respon" class="col-sm-2 col-form-label">Respon</label>
+              <form method="POST" action="" enctype="multipart/form-data">
+
+                <br>
+                <input class="btn btn-sm btn-info" type="submit" name="Kirim Respon" value="Kirim Respon">
+              </form>
+            </div>
+          </div>
+        </div> -->
+
+        </div>
+        </section>
+        </div>
+
+//Query All input fields
+<script>
+var select_fields = document.getElementsByTagName('select')
+
+var input_fields = document.getElementsByTagName('input')
+
+
+for (var field in select_fields){
+  select_fields[field].className += ' form-control'
+}
+for (var field in input_fields){
+  input_fields[field].className += ' form-control'
+}
+</script>
+
+{% endblock %}
