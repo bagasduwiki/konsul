@@ -42,9 +42,7 @@
 //Query All input fields
 <script>
 var select_fields = document.getElementsByTagName('select')
-
 var input_fields = document.getElementsByTagName('input')
-
 
 for (var field in select_fields){
   select_fields[field].className += ' form-control'
@@ -53,5 +51,4 @@ for (var field in input_fields){
   input_fields[field].className += ' form-control'
 }
 </script>
-
 {% endblock %}

@@ -30,41 +30,83 @@
                 <div class="form-group row">
                   <label for="tglpengaduan" class="col-sm-2 col-form-label">Nama Klien</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="namaclient" value="{{respon.pengaduan.client}}" disabled>
+                    <input type="text" class="form-control" id="namaclient" value="{{pengaduan.client}}" disabled>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="tglpengaduan" class="col-sm-2 col-form-label">Tgl Pengaduan</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="tglpengaduan" value="{{respon.pengaduan.date_created}}" disabled>
+                    <input type="text" class="form-control" id="tglpengaduan" value="{{pengaduan.date_created}}" disabled>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="ktgpengaduan" class="col-sm-2 col-form-label">Kategori Pengaduan</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="ktgpengaduan" value="{{respon.pengaduan.kategori_pengaduan}}" disabled>
+                    <input type="text" class="form-control" id="ktgpengaduan" value="{{pengaduan.kategori_pengaduan}}" disabled>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="keterangan" class="col-sm-2 col-form-label">Keterangan</label>
+                  <label for="keterangan" class="col-sm-2 col-form-label">Status Penanganan</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="keterangan" value="{{respon.pengaduan.kategori_penanganan}}" disabled>
+                    <input type="text" class="form-control" id="keterangan" value="{{pengaduan.kategori_penanganan}}" disabled>
                   </div>
                 </div>
-                <div class="form-group row">
+                <!-- <div class="form-group row">
                   <label for="keterangan" class="col-sm-2 col-form-label">Keluhan User</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="keluhanterakhir" value="{{respon.pengaduan.keluhan}}" disabled>
+                    <input type="text" class="form-control" id="keluhanterakhir" value="{{pengaduan.keluhan}}" disabled>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="respon" class="col-sm-2 col-form-label">Respon Admin</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="respon" value="{{respon.respon}}" disabled>
+                    <input type="text" class="form-control" id="respon" value="{{pengaduan.respon}}" disabled>
                   </div>
-                </div>
+                </div> -->
               </form>
             </div>
+
+            <div class="card direct-chat direct-chat-primary">
+                  <div class="card-header">
+                    <h3 class="card-title">Percakapan</h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <!-- Conversations are loaded here -->
+                    <div class="direct-chat-messages">
+                      <!-- Message. Default to the left -->
+                      <div class="direct-chat-msg">
+                        <div class="direct-chat-infos clearfix">
+                          <span class="direct-chat-name float-left">User</span>
+                        </div>
+                        <img class="direct-chat-img" src="{% static 'img/user6-128x128.jpg' %}" alt="message user image">
+                        <!-- /.direct-chat-infos -->
+                        <div class="direct-chat-text">
+                          {{pengaduan.keluhan}}
+                        </div>
+                        <!-- <span class="direct-chat-timestamp float-left">{{pengaduan.date_created}}</span> -->
+                        <!-- /.direct-chat-text -->
+                      </div>
+                      <!-- /.direct-chat-msg -->
+
+                      <!-- Message to the right -->
+
+                      <div class="direct-chat-msg right">
+                        <div class="direct-chat-infos clearfix">
+                          <span class="direct-chat-name float-right">Admin</span>
+                        </div>
+                        <img class="direct-chat-img" src="{% static 'img/user1-128x128.jpg' %}" alt="message user image">
+                        <!-- /.direct-chat-infos -->
+                        <div class="direct-chat-text">
+                          {{pengaduan.respon}}
+                        </div>
+                        <!-- <span class="direct-chat-timestamp float-right">{{pengaduan.date_created}}</span> -->
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
           </div>
         </div>
 

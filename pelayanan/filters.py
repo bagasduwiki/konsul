@@ -4,4 +4,4 @@ from .models import *
 class PelayananFilter(django_filters.FilterSet):
     class Meta:
         model = Pengaduan
-        fields = '__all__'
+        fields = ['kategori_penanganan']

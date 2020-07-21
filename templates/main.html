@@ -4,11 +4,13 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Project Django</title>
+  <title>AITC Service</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
   <script type="text/javascript" src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <script src="https://use.fontawesome.com/3c0d5b504e.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <link rel="stylesheet" href="{% static 'css/adminlte.min.css' %}">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -43,12 +45,13 @@
     {% endblock %}
 
 
-    <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
+    <footer class="main-footer text-center bg-info text-white">
+    <strong>CV. ADISATYA IT CONSULTANT</strong>
+    <br>
     All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
+    <!-- <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 3.0.1
-    </div>
+    </div> -->
   </footer>
 
   <!-- Control Sidebar -->
@@ -69,7 +72,12 @@
 <script src="{% static 'js/pages/dashboard.js' %}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{% static 'js/demo.js' %}"></script>
-
+<script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.0/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="sweetalert2.all.min.js"></script>
+<!- Optional: include a polyfill for ES6 Promises for IE11 -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script> -->
 <script>
     setTimeout(function(){
       if ($('#msg').length > 0){

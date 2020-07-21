@@ -18,21 +18,40 @@
     <section class="content">
       <div class="container-fluid">
         <h3>Edit Profile</h3>
-          <div class="row">
-            <div class="col-md-12">
-              <a class="btn btn-md btn-info" href="{% url 'ubahpassword' %}">Ubah Password</a>
-              <br>
-              <div class="card card-body">
-                <form method="POST" action="" enctype="multipart/form-data">
-                  {% csrf_token %}
-                  {{form.as_p}}
-                  <input class="btn btn-primary" type="submit" name="Update Information">
+        <a class="btn btn-md btn-info" href="{% url 'ubahpassword' %}">Ubah Password</a>
+        <div class="row">
+          <div class="col">
+            <br>
+            <div class="row">
+              <div class="col-md">
+                <div class="card card-body">
+                  <form method="POST" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="input-group mb-2">
+                      <label for="keterangan" class="col-sm-2 col-form-label">Nama</label>
+                      {{form.nama}}
+                    </div>
+                    <div class="input-group mb-2">
+                      <label for="keterangan" class="col-sm-2 col-form-label">Alamat</label>
+                      {{form.alamat}}
+                    </div>
+                    <div class="input-group mb-2">
+                      <label for="keterangan" class="col-sm-2 col-form-label">Kontak</label>
+                      {{form.no_hp}}
+                    </div>
+                    <div class="input-group mb-2">
+                      <label for="keterangan" class="col-sm-2 col-form-label">Email</label>
+                      {{form.email}}
+                    </div>
+                    <input class="btn btn-primary" type="submit" name="Update Information">
                 </form>
               </div>
             </div>
           </div>
         </div>
-        </section><!-- /.container-fluid -->
+      </div>
+    </div>
+  </section><!-- /.container-fluid -->
 
 
 

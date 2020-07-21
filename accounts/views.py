@@ -4,13 +4,16 @@ from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate
 
 from aitc_service.views import *
 from aitc_service.forms import *
 from .models import *
-from .forms import AdminForm, ClientForm, UpdateUserForm, CreateUserForm
+from .forms import *
 
+###############Admin########################################################
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def accounts(request):
     admin = request.user.admin
     form = AdminForm(instance=admin)
@@ -21,10 +24,11 @@ def accounts(request):
             form.save()
             messages.success(request, 'Data Berhasil Diubah')
 
-    context = {'form':form}
+    context = {'form':form, 'act':'accounts'}
     return render(request, 'akun.html', context)
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def ubahpassword(request):
     user = request.user
     form = UpdateUserForm(instance=user)
@@ -38,10 +42,20 @@ def ubahpassword(request):
             messages.success(request, 'Data Berhasil Diubah')
             return redirect('accounts')
 
-    context = {'form':form}
+    context = {'form':form, 'act':'accounts'}
     return render(request, 'ubahpassword.html', context)
 
+###############Klien########################################################
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def daftarclient(request):
+    client = Client.objects.all()
+
+    context = {'client':client, 'act':'klien'}
+    return render(request, 'daftarclient.html', context)
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def ubahpassuser(request):
     user = request.user
     form = UpdateUserForm(instance=user)
@@ -55,31 +69,33 @@ def ubahpassuser(request):
             messages.success(request, 'Data Berhasil Diubah')
             return redirect('detailclient')
 
-    context = {'form':form}
+    context = {'form':form, 'act':'klien'}
     return render(request, 'ubahpassuser.html', context)
 
 @login_required(login_url='login')
-def daftarclient(request):
-    client = Client.objects.all()
-
-    context = {'client':client}
-    return render(request, 'daftarclient.html', context)
-
-@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def tambahuser(request):
     form = CreateUserForm()
-
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Data Berhasil Ditambahkan')
+            user = form.save()
+            username = form.cleaned_data.get('username')
+
+            # group = Group.objects.get(name='client')
+            # user.groups.add(group)
+            # Client.objects.create(
+            #     user=user,
+            # )
+
+            messages.success(request, 'Data Berhasil Ditambahkan untuk ' + username)
             return redirect('tambahclient')
 
-    context = {'form':form}
+    context = {'form':form, 'act':'klien'}
     return render(request, 'tambah_user.html', context)
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def tambahclient(request):
     form = ClientForm()
     if request.method == 'POST':
@@ -89,10 +105,11 @@ def tambahclient(request):
             messages.success(request, 'Data Berhasil Ditambahkan')
             return redirect('daftarclient')
 
-    context = {'form':form}
+    context = {'form':form, 'act':'klien'}
     return render(request, 'tambah_client.html', context)
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def detailclient(request, pk):
     client = Client.objects.get(id=pk)
     form = ClientForm(instance=client)
@@ -104,10 +121,11 @@ def detailclient(request, pk):
             messages.success(request, 'Data Berhasil Diubah')
             return redirect('daftarclient')
 
-    context = {'client':client, 'form':form}
+    context = {'client':client, 'form':form, 'act':'klien'}
     return render(request, 'detailclient.html', context)
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def deleteClient(request, pk):
     client = Client.objects.get(id=pk)
     form = ClientForm()
@@ -116,3 +134,15 @@ def deleteClient(request, pk):
         client.delete()
         messages.success(request, 'Data Berhasil Dihapus')
         return redirect('daftarclient')
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def delklien(request, pk):
+    client = Client.objects.get(id=pk)
+    if request.method == 'POST':
+        client.delete()
+        messages.success(request, 'Data Berhasil Dihapus')
+        return redirect('daftarclient')
+
+    context = {'item':client, 'act':'klien'}
+    return render(request, 'del_client.html', context)

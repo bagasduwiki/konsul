@@ -10,7 +10,7 @@ from django.contrib.auth.models import Group
 from .forms import CreateUserForm
 from pelayanan.models import *
 from accounts.models import *
-from .decorators import allowed_users
+from .decorators import allowed_users, admin_only
 
 def registerPage(request):
     if request.user.is_authenticated:
@@ -20,16 +20,16 @@ def registerPage(request):
         if request.method == 'POST':
             form = CreateUserForm(request.POST)
             if form.is_valid():
-                form.save()
-                user = form.cleaned_data.get('username')
+                user = form.save()
+                username = form.cleaned_data.get('username')
 
-                # group = Group.objects.get(name='client')
-                # user.groups.add(group)
+                group = Group.objects.get(name='client')
+                user.groups.add(group)
                 # Client.objects.create(
                 #     user=user,
                 # )
 
-                messages.success(request, 'Account was created for ' + user)
+                messages.success(request, 'Account was created for ' + username)
                 return redirect('login')
 
         context = {'form':form}
@@ -58,10 +58,11 @@ def logoutUser(request):
 
     return redirect('login')
 
+###############Dashboard########################################################
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['admin'])
+@admin_only
 def home(request):
-    pengaduan = Pengaduan.objects.all()
+    pengaduan = Pengaduans.objects.all()
     client = Client.objects.all()
 
     tot_client = client.count()
@@ -71,10 +72,12 @@ def home(request):
     tot_online = pengaduan.filter(kategori_penanganan=(2)).count()
     tot_progres = tot_tkp + tot_online
 
-    context = {'pengaduan':pengaduan, 'client':client, 'tot_client':tot_client, 'tot_pengaduan':tot_pengaduan, 'tot_selesai':tot_selesai, 'tot_progres':tot_progres}
+    context = {'act':'dashboard', 'pengaduan':pengaduan, 'client':client, 'tot_client':tot_client, 'tot_pengaduan':tot_pengaduan, 'tot_selesai':tot_selesai, 'tot_progres':tot_progres}
     return render(request,'dashboard.html',context)
 
+###############User Page########################################################
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['client'])
 def userPage(request):
     context = {}
     return render(request, 'user_page.html', context)

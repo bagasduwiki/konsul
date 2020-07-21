@@ -4,15 +4,29 @@ from .models import *
 
 class PelayananForm(ModelForm):
     class Meta:
-        model = Pengaduan
+        model = Pengaduans
         fields = '__all__'
 
 class DeletePelayananForm(ModelForm):
     class Meta:
-        model = Pengaduan
+        model = Pengaduans
+        fields = '__all__'
+
+class JawabForm(ModelForm):
+    class Meta:
+        model = Respons
         fields = '__all__'
 
 class StatusForm(ModelForm):
     class Meta:
-        model = Pengaduan
+        model = Pengaduans
         fields = ['kategori_penanganan']
+
+class FilterForm(forms.Form):
+    KATEGORI=(
+        ('', '------------'),
+        ("TKP", "TKP"),
+        ("Online","Online"),
+        ("Selesai","Selesai"),
+    )
+    kategori_penanganan = forms.ChoiceField(choices=KATEGORI, required=False)
