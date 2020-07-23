@@ -22,6 +22,12 @@ class StatusForm(ModelForm):
         model = Pengaduans
         fields = ['kategori_penanganan']
 
+class EditStatusForm(ModelForm):
+	pk = forms.IntegerField()
+	class Meta:
+		model = Pengaduans
+		fields = '__all__'
+
 class FilterForm(forms.Form):
     KATEGORI=(
         ('', '------------'),

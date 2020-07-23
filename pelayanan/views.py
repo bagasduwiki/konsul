@@ -22,6 +22,7 @@ def pelayanan(request):
     myFilter = PelayananFilter()
 
     form = PelayananForm()
+    formup = EditStatusForm()
     if request.method == 'POST':
         form = PelayananForm(request.POST)
         if form.is_valid():
@@ -29,8 +30,22 @@ def pelayanan(request):
             messages.success(request, 'Data Berhasil Ditambahkan')
             return redirect('pelayanan')
 
-    context = {'pengaduan':pengaduan, 'client':client, 'myFilter':myFilter, 'act':'pelayanan', 'form':form}
+    context = {'pengaduan':pengaduan, 'client':client, 'myFilter':myFilter, 'act':'pelayanan', 'form':form, 'formup':formup}
     return render(request, 'pelayanan.html', context)
+
+@login_required(login_url='login')
+def updateStatus(request):
+	formup = EditStatusForm()
+
+	if request.method =='POST':
+		formup = EditStatusForm(request.POST)
+		if formup.is_valid():
+			idk = formup.cleaned_data['pk']
+			kategori_penanganan = formup.cleaned_data['kategori_penanganan']
+
+			Pengaduans.objects.filter(id=idk).update(kategori_penanganan=kategori_penanganan)
+
+			return redirect('pelayanan')
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
@@ -47,19 +62,19 @@ def filterpelayanan(request):
     return render(request, 'pelayanan.html', context)
 
 
-@login_required(login_url='login')
-@allowed_users(allowed_roles=['admin'])
-def tambahpelayanan(request):
-    form = PelayananForm()
-    if request.method == 'POST':
-        form = PelayananForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Data Berhasil Ditambahkan')
-            return redirect('pelayanan')
-
-    context = {'form':form, 'act':'pelayanan'}
-    return render(request, 'tambah_pelayanan.html', context)
+# @login_required(login_url='login')
+# @allowed_users(allowed_roles=['admin'])
+# def tambahpelayanan(request):
+#     form = PelayananForm()
+#     if request.method == 'POST':
+#         form = PelayananForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, 'Data Berhasil Ditambahkan')
+#             return redirect('pelayanan')
+#
+#     context = {'form':form, 'act':'pelayanan'}
+#     return render(request, 'tambah_pelayanan.html', context)
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
@@ -81,9 +96,9 @@ def editstatus(request, pk):
 def detailpelayanan(request, pk):
     pengaduan = Pengaduans.objects.get(id=pk)
     # respon = Respons.objects.get(id=pk)
-    form = JawabForm(instance=pengaduan)
+    form = PelayananForm(instance=pengaduan)
     if request.method == 'POST':
-        form = JawabForm(request.POST, instance=pengaduan)
+        form = PelayananForm(request.POST, instance=pengaduan)
         if form.is_valid():
             form.save()
             messages.success(request, 'Data Berhasil Diubah')

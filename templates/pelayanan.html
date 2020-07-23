@@ -10,8 +10,7 @@
     <section class="content">
       <div class="container-fluid">
         <h3>Data Pengaduan</h3>
-        <a class="btn btn-info" href="{% url 'tambahpelayanan' %}"><i class="fa fa-truck"></i></a>
-          <button type="button" data-toggle="modal" data-target="#pelayananModal" class="d-none d-sm-inline-block btn btn-md btn-info shadow-sm"><i class="fas fa-plus"></i></button>
+        <button type="button" data-toggle="modal" data-target="#pelayananModal" class="d-none d-sm-inline-block btn btn-md btn-info shadow-sm"><i class="fas fa-plus"></i></button>
             <div class="row">
               <div class="col">
                 <br>
@@ -43,7 +42,7 @@
                           <td>{{pengaduan.kategori_penanganan}}</td>
                           <!-- <td>{{pengaduan.selesai}}</td> -->
                           <td>
-                          <button id="btneditstatus" type="button" data-toggle="modal" data-target="#statusModal" data-status="{{pengaduan.kategori_penanganan}}" class="btn btn-info btn-sm mr-2"><i class="fas fa-truck"></i></button>
+                          <button id="btneditstatus" type="button" data-toggle="modal" data-target="#statusModal" data-id="{{pengaduan.id}}" data-kategori_penanganan="{{pengaduan.kategori_penanganan}}" class="btn btn-info btn-sm mr-2"><i class="fas fa-truck"></i></button>
                           <a class="btn btn-sm btn-success" href="{% url 'editstatus' pengaduan.id %}"><i class="fa fa-pencil-alt"></i></a>
                           <a class="btn btn-sm btn-info" href="{% url 'detailpelayanan' pengaduan.id %}"><i class="fa fa-folder"></i></a>
                           <a class="btn btn-sm btn-danger" href="{% url 'pelayanandel' pengaduan.id %}"><i class="fa fa-trash"></i></a>
@@ -62,33 +61,43 @@
             </div>
           </div>
 
-          <div class="modal fade" id="pelayananModal" tabindex="-1" role="dialog">
+          <div class="modal fade" id="pelayananModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         	  <div class="modal-dialog" role="document">
         	    <div class="modal-content">
         	      <div class="modal-header">
-        	        <h5 class="modal-title" id="exampleModalLabel">Tambah Pengaduan</h5>
+        	        <h5 class="modal-title" id="exampleModalLabel">Tambah Pelayanan</h5>
         	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         	          <span aria-hidden="true">&times;</span>
         	        </button>
         	      </div>
-        	      <div class="modal-body">
-        	        <form action="" method="post">
+                <div class="modal-body">
+                  <form action="" method="post">
         	        	{% csrf_token %}
           			  <div class="form-group">
-          			    <label for="exampleInputEmail1">Nama Barang</label>
-          			    {{form.client}}
+          			    <label for="exampleInputEmail1">Nama Klien</label>
+                    {{form.client}}
           			  </div>
                   <div class="form-group">
-          			    <label for="exampleInputEmail1">Kategori Pengaduan</label>
-          			    {{form.kategori_pengaduan}}
+          			    <label for="exampleInputPassword1">Kategori Pengaduan</label>
+                    {{form.kategori_pengaduan}}
           			  </div>
-        	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        	        <button type="submit" id="btnSave" class="btn btn-primary">Tambah</button>
-        	      </form>
+                  <div class="form-group">
+          			    <label for="exampleInputPassword1" class="col-md-5 col-form-label">Keluhan</label>
+                    {{form.keluhan}}
+          			  </div>
+                  <div class="form-group">
+          			    <label for="exampleInputPassword1">Status Penanganan</label>
+                    {{form.kategori_penanganan}}
+          			  </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                  <button type="submit" id="btnSave" class="btn btn-success">Tambah Pengaduan</button>
+                </div>
+                </form>
               </div>
-        	    </div>
-        		</div>
-        	</div>
+            </div>
+          </div>
 
           <div class="modal fade" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         	  <div class="modal-dialog" role="document">
@@ -100,26 +109,39 @@
         	        </button>
         	      </div>
         	      <div class="modal-body">
-        	        <form action="" method="post">
+        	        <form action="{% url 'updatestatus' %}" method="post">
         	        	{% csrf_token %}
-          			  <div class="form-group">
-          			    <label for="exampleInputEmail1">Status Penanganan</label>
-
-          			  </div>
-          	    </div>
+                    {{formup.pk.as_hidden}}
+        			  <div class="form-group">
+        			    <label for="exampleInputEmail1">Status Penanganan</label>
+                  {{formup.kategori_penanganan}}
+        			  </div>
+        	      </div>
         	      <div class="modal-footer">
         	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        	        <button type="submit" id="btnSave" class="btn btn-primary">Update</button>
+        	        <button type="submit" class="btn btn-primary">Simpan</button>
         	      </div>
         	      </form>
         	    </div>
-        		</div>
+        	  </div>
         	</div>
-        </div>
 
-      </div>
-    </section>
-  </div>
+        </div>
+      </section>
+    </div>
+
+<script type="text/javascript">
+  $('#statusModal').on('show.bs.modal', function (event){
+    console.log('modalopened');
+    var button = $(event.relatedTarget);
+    var id = button.data('id');
+    var kategori_penanganan = button.data('kategori_penanganan');
+
+    var modal = $(this);
+    modal.find('#id_kategori_penanganan').val(kategori_penanganan);
+    modal.find('#id_pk').val(id);
+  })
+</script>
 
 <script>
 	$(document).ready(function(){
