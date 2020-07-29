@@ -8,14 +8,14 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-md">
-            <h3>Edit Status Penanganan</h3>
+            <h3>Edit Kategori</h3>
             <div class="card card-body">
               <form method="POST" action="" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group row">
-                  <label for="keterangan" class="col-sm-2 col-form-label">Status Penanganan</label>
+                  <label for="keterangan" class="col-sm-2 col-form-label">Nama Kategori</label>
                   <div class="col-sm-10">
-                    {{form.kategori_penanganan}}
+                    {{form.nama_kategori}}
                   </div>
                 </div>
                 <br>

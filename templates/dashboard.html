@@ -14,13 +14,6 @@
         {% include 'status.html' %}
         <div class="row">
           <div class="col">
-            <!-- <div class="input-group">
-              <form class="form-inline" action="" method="get">
-                <span>
-                  <input id="filterInput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" size="50">
-                </span>
-              </form>
-            </div> -->
               <div class="row">
                 <div class="col-md">
                   <h3>Data Pengaduan</h3>
@@ -39,7 +32,7 @@
                       <tbody class="text-center">
                         {% for pengaduan in pengaduan %}
                         <tr>
-                          <td>{{pengaduan.date_created}}</td>
+                          <td>{{pengaduan.date_created|date:'d F Y, H:i e'}}</td>
                           <td>{{pengaduan.client}}</td>
                           <td>{{pengaduan.keluhan}}</td>
                           <td>{{pengaduan.kategori_penanganan}}</td>
@@ -55,7 +48,7 @@
             </div>
 
             </div>
-          </div><!-- /.container-fluid -->
+          </div>
 
         </section>
         {% endif %}

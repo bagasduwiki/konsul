@@ -6,7 +6,6 @@ urlpatterns = [
     path('', pelayanan, name='pelayanan'),
     path('pelayanan/update', views.updateStatus, name="updatestatus"),
     path('pelayanan/filter/', views.filterpelayanan, name='filterpelayanan'),
-    # path('tambahpelayanan', views.tambahpelayanan, name='tambahpelayanan'),
     path('editstatus/<str:pk>/', views.editstatus, name='editstatus'),
     path('detailpelayanan/<str:pk>/', views.detailpelayanan, name='detailpelayanan'),
     path('detaildaftar/<str:pk>/', views.detaildaftar, name='detaildaftar'),

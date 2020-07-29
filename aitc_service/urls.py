@@ -10,8 +10,8 @@ urlpatterns = [
 
     path('', views.home, name='home'),
     path('accounts/', include('accounts.urls')),
-    # path('', include('master.urls')),
     path('pelayanan/', include('pelayanan.urls')),
+    path('kategori/', include('master.urls')),
 
     path('user/', views.userPage, name='user-page'),
 ]
