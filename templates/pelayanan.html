@@ -43,9 +43,14 @@
                           <td>{{pengaduan.kategori_penanganan}}</td>
                           <td>
                           <!-- <button id="btneditstatus" type="button" data-toggle="modal" data-target="#statusModal" data-id="{{pengaduan.id}}" data-kategori_penanganan="{{pengaduan.kategori_penanganan}}" class="btn btn-info btn-sm mr-2"><i class="fas fa-truck"></i></button> -->
+                          <form action="{% url 'deletepelayanan' pengaduan.id %}" method="post">
                           <a class="btn btn-sm btn-success" href="{% url 'editstatus' pengaduan.id %}"><i class="fa fa-pencil-alt"></i></a>
-                          <a class="btn btn-sm btn-info" href="{% url 'detailpelayanan' pengaduan.id %}"><i class="fa fa-folder"></i></a>
-                          <a class="btn btn-sm btn-danger" href="{% url 'pelayanandel' pengaduan.id %}"><i class="fa fa-trash"></i></a>
+                          <a class="btn btn-sm btn-info" href="{% url 'respon' pengaduan.id %}"><i class="fa fa-folder"></i></a>
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-danger btn-sm"
+                          onclick="return confirm('Yakin ingin menghapus keluhan {{pengaduan.keluhan}} dari pengaduan?')"><i class="fa fa-trash"></i></button>
+                          </form>
+
                           </td>
                           <!-- <form action="{% url 'deletepelayanan' pengaduan.id %}" method="post">
                             {% csrf_token %}

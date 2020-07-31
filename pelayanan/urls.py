@@ -10,5 +10,6 @@ urlpatterns = [
     path('detailpelayanan/<str:pk>/', views.detailpelayanan, name='detailpelayanan'),
     path('detaildaftar/<str:pk>/', views.detaildaftar, name='detaildaftar'),
     path('<str:pk>/delete', views.deletepelayanan, name='deletepelayanan'),
-    path('pelayanan/pelayanandel/<str:pk>/', views.pelayanandel, name='pelayanandel'),
+    # path('pelayanan/pelayanandel/<str:pk>/', views.pelayanandel, name='pelayanandel'),
+    path('post/<str:pk>', views.respon, name="respon"),
 ]

@@ -48,6 +48,3 @@ def kategoridel(request, pk):
         kategori.delete()
         messages.success(request, 'Data Berhasil Dihapus')
         return redirect('kategori')
-
-    context = {'item':kategori, 'act':'kategori'}
-    return render(request, 'delkategori.html', context)

@@ -8,8 +8,8 @@ urlpatterns = [
     path('daftarclient/tambahuser/', views.tambahuser, name='tambahuser'),
     path('daftarclient/tambahclient/', views.tambahclient, name='tambahclient'),
     path('daftarclient/detailclient/<str:pk>/', views.detailclient, name='detailclient'),
-    # path('daftarclient/<str:pk>/delete', views.deleteClient, name='deleteclient'),
-    path('daftarclient/delklien/<str:pk>/', views.delklien, name='delklien'),
+    path('daftarclient/<str:pk>/delete', views.deleteClient, name='deleteclient'),
+    # path('daftarclient/delklien/<str:pk>/', views.delklien, name='delklien'),
 
     path('ubahpassword/', views.ubahpassword, name='ubahpassword'),
     path('ubahpassuser/', views.ubahpassuser, name='ubahpassuser'),

@@ -109,6 +109,26 @@ def detailpelayanan(request, pk):
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
+def respon(request, pk):
+	pengaduan = Pengaduans.objects.filter(id=pk)
+	pengaduan1 = Pengaduans.objects.get(id=pk)
+	pengaduan2 = Pengaduans.objects.all()
+	respon = Respons.objects.filter(pengaduan=pk).order_by("-created_at")
+	form = JawabForm(initial={'pengaduan':pengaduan1})
+
+	if request.method == 'POST':
+        # print('Printing post: ', request.POST)
+		formset = JawabForm(request.POST)
+		if formset.is_valid():
+			formset.save()
+			return redirect('pelayanan')
+
+	context = {'pengaduan': pengaduan, 'pengaduan2':pengaduan2, 'act':'pelayanan', 'respon': respon, 'form':form}
+
+	return render(request, 'detail_pelayanan.html', context)
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def deletepelayanan(request, pk):
     pengaduan = Pengaduans.objects.get(id=pk)
     form = DeletePelayananForm()
@@ -118,17 +138,17 @@ def deletepelayanan(request, pk):
         messages.success(request, 'Data Berhasil Dihapus')
         return redirect('pelayanan')
 
-@login_required(login_url='login')
-@allowed_users(allowed_roles=['admin'])
-def pelayanandel(request, pk):
-    pengaduan = Pengaduans.objects.get(id=pk)
-    if request.method == 'POST':
-        pengaduan.delete()
-        messages.success(request, 'Data Berhasil Dihapus')
-        return redirect('pelayanan')
-
-    context = {'item':pengaduan, 'act':'pelayanan'}
-    return render(request, 'del_pelayanan.html', context)
+# @login_required(login_url='login')
+# @allowed_users(allowed_roles=['admin'])
+# def pelayanandel(request, pk):
+#     pengaduan = Pengaduans.objects.get(id=pk)
+#     if request.method == 'POST':
+#         pengaduan.delete()
+#         messages.success(request, 'Data Berhasil Dihapus')
+#         return redirect('pelayanan')
+#
+#     context = {'item':pengaduan, 'act':'pelayanan'}
+#     return render(request, 'del_pelayanan.html', context)
 
 ###############Dashboard########################################################
 @login_required(login_url='login')

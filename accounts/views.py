@@ -135,14 +135,14 @@ def deleteClient(request, pk):
         messages.success(request, 'Data Berhasil Dihapus')
         return redirect('daftarclient')
 
-@login_required(login_url='login')
-@allowed_users(allowed_roles=['admin'])
-def delklien(request, pk):
-    client = Client.objects.get(id=pk)
-    if request.method == 'POST':
-        client.delete()
-        messages.success(request, 'Data Berhasil Dihapus')
-        return redirect('daftarclient')
-
-    context = {'item':client, 'act':'klien'}
-    return render(request, 'del_client.html', context)
+# @login_required(login_url='login')
+# @allowed_users(allowed_roles=['admin'])
+# def delklien(request, pk):
+#     client = Client.objects.get(id=pk)
+#     if request.method == 'POST':
+#         client.delete()
+#         messages.success(request, 'Data Berhasil Dihapus')
+#         return redirect('daftarclient')
+#
+#     context = {'item':client, 'act':'klien'}
+#     return render(request, 'del_client.html', context)

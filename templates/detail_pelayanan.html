@@ -24,25 +24,25 @@
                 <div class="form-group row">
                   <label for="tglpengaduan" class="col-sm-2 col-form-label">Nama Klien</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="tglpengaduan" value="{{pengaduan.client}}" disabled>
+                    <input type="text" class="form-control" id="tglpengaduan" value="{{pengaduan2.client}}" disabled>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="tglpengaduan" class="col-sm-2 col-form-label">Tgl Pengaduan</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="tglpengaduan" value="{{pengaduan.date_created|date:'d F Y, H:i e'}}" disabled>
+                    <input type="text" class="form-control" id="tglpengaduan" value="{{pengaduan2.date_created|date:'d F Y, H:i e'}}" disabled>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="ktgpengaduan" class="col-sm-2 col-form-label">Kategori Pengaduan</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="ktgpengaduan" value="{{pengaduan.kategori_pengaduan}}" disabled>
+                    <input type="text" class="form-control" id="ktgpengaduan" value="{{pengaduan2.kategori_pengaduan}}" disabled>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="keterangan" class="col-sm-2 col-form-label">Status Penanganan</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="keterangan" value="{{pengaduan.kategori_penanganan}}" disabled>
+                    <input type="text" class="form-control" id="keterangan" value="{{pengaduan2.kategori_penanganan}}" disabled>
                   </div>
                 </div>
               </form>
@@ -66,7 +66,7 @@
                     <img class="direct-chat-img" src="{% static 'img/user6-128x128.jpg' %}" alt="message user image">
                     <!-- /.direct-chat-infos -->
                     <div class="direct-chat-text">
-                      {{pengaduan.keluhan}}
+                      {{pengaduan2.keluhan}}
                     </div>
                     <!-- <span class="direct-chat-timestamp float-left">{{pengaduan.date_created}}</span> -->
                     <!-- /.direct-chat-text -->
