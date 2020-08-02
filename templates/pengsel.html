@@ -114,6 +114,7 @@ for (var field in input_fields){
     $(document).ready( function () {
       $('#tablepelayanan').DataTable({
         "lengthMenu": [[5, 10, 20, 50, -1], [5, 10, 20, 50, "All"]],
+        "order": [[0, "asc"]],
       });
     });
   var select_fields = document.getElementsByTagName('select')
