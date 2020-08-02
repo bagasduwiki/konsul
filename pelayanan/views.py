@@ -19,8 +19,10 @@ def pelayanan(request):
     pengaduan = Pengaduans.objects.all()
     client = Client.objects.all()
     stat_online = pengaduan.filter(Q(kategori_penanganan=(2)) | Q(kategori_penanganan=(1)))
-    myFilter = filterpenanganan(request.GET, queryset=pengaduan)
+
+    myFilter = filterpenanganan(request.GET, queryset=stat_online)
     orders = myFilter.qs
+
     # kategori_penanganan = request.GET.get('kategori_penanganan')
     # # pengaduans = pengaduan.order_set.all()
     # myFilter = PelayananFilter()
