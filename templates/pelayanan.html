@@ -11,8 +11,15 @@
       <div class="container-fluid">
         <div class="d-sm-flex align-items-center justify-content-between mb-2">
       		<h1 class="h3 mb-0 text-gray-800">Data Pengaduan</h1>
+          <br>
       		<button type="button" data-toggle="modal" data-target="#pelayananModal" class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm"><i class="fas fa-plus"></i> Tambah Pengaduan</button>
       	</div>
+          <br>
+          <form method="get">
+              {{myFilter.form}}
+          </form>
+          <br><button class="btn btn-primary" type="submit">Search</button>
+
             <div class="row">
               <div class="col">
                 <br>
@@ -35,7 +42,7 @@
                       </thead>
 
                       <tbody>
-                        {% for pengaduan in stat_online %}
+                        {% for pengaduan in orders %}
                         <tr class="text-center">
                           <td>{{pengaduan.date_created|date:'d F Y, H:i e'}}</td>
                           <td>{{pengaduan.client}}</td>

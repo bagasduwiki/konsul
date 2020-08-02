@@ -9,7 +9,7 @@ from aitc_service.views import *
 from aitc_service.forms import *
 from .forms import *
 from .models import *
-from .filters import PelayananFilter
+from .filters import *
 
 # Create your views here.
 ###############Pengaduan########################################################
@@ -19,10 +19,11 @@ def pelayanan(request):
     pengaduan = Pengaduans.objects.all()
     client = Client.objects.all()
     stat_online = pengaduan.filter(Q(kategori_penanganan=(2)) | Q(kategori_penanganan=(1)))
-
-    kategori_penanganan = request.GET.get('kategori_penanganan')
-    # pengaduans = pengaduan.order_set.all()
-    myFilter = PelayananFilter()
+    myFilter = filterpenanganan(request.GET, queryset=pengaduan)
+    orders = myFilter.qs
+    # kategori_penanganan = request.GET.get('kategori_penanganan')
+    # # pengaduans = pengaduan.order_set.all()
+    # myFilter = PelayananFilter()
 
     form = PelayananForm()
     formup = EditStatusForm()
@@ -33,7 +34,7 @@ def pelayanan(request):
             messages.success(request, 'Data Berhasil Ditambahkan')
             return redirect('pelayanan')
 
-    context = {'pengaduan':pengaduan, 'client':client, 'myFilter':myFilter, 'act':'pelayanan', 'form':form, 'formup':formup, 'stat_online':stat_online}
+    context = {'pengaduan':pengaduan, 'client':client, 'myFilter':myFilter, 'orders':orders, 'act':'pelayanan', 'form':form, 'formup':formup, 'stat_online':stat_online}
     return render(request, 'pelayanan.html', context)
 
 @login_required(login_url='login')
