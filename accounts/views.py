@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import Group
 
 from aitc_service.views import *
 from aitc_service.forms import *
@@ -26,6 +27,42 @@ def accounts(request):
 
     context = {'form':form, 'act':'accounts'}
     return render(request, 'akun.html', context)
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def tambahadmin(request):
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            username = form.cleaned_data.get('username')
+
+            group = Group.objects.get(name='admin')
+            user.groups.add(group)
+            # Admin.objects.create(
+            #     user=user,
+            # )
+
+            messages.success(request, 'Username telah ditambahkan untuk ' + username)
+            return redirect('tambahdata')
+
+    context = {'form':form, 'act':'admin'}
+    return render(request, 'tambahadmin.html', context)
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def tambahdata(request):
+    form = AdminForm()
+    if request.method == 'POST':
+        form = AdminForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Admin Telah Ditambahkan')
+            return redirect('accounts')
+
+    context = {'form':form, 'act':'admin'}
+    return render(request, 'dataadmin.html', context)
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])

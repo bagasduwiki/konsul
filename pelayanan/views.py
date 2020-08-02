@@ -3,6 +3,7 @@ from django.http import HttpResponse
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 from aitc_service.views import *
 from aitc_service.forms import *
@@ -17,6 +18,8 @@ from .filters import PelayananFilter
 def pelayanan(request):
     pengaduan = Pengaduans.objects.all()
     client = Client.objects.all()
+    stat_online = pengaduan.filter(Q(kategori_penanganan=(2)) | Q(kategori_penanganan=(1)))
+
     kategori_penanganan = request.GET.get('kategori_penanganan')
     # pengaduans = pengaduan.order_set.all()
     myFilter = PelayananFilter()
@@ -30,8 +33,18 @@ def pelayanan(request):
             messages.success(request, 'Data Berhasil Ditambahkan')
             return redirect('pelayanan')
 
-    context = {'pengaduan':pengaduan, 'client':client, 'myFilter':myFilter, 'act':'pelayanan', 'form':form, 'formup':formup}
+    context = {'pengaduan':pengaduan, 'client':client, 'myFilter':myFilter, 'act':'pelayanan', 'form':form, 'formup':formup, 'stat_online':stat_online}
     return render(request, 'pelayanan.html', context)
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def pengsel(request):
+    pengaduan = Pengaduans.objects.all()
+    client = Client.objects.all()
+    selesai = pengaduan.filter(kategori_penanganan=(3))
+
+    context = {'pengaduan':pengaduan, 'client':client, 'act':'pengsel', 'selesai':selesai}
+    return render(request, 'pengsel.html', context)
 
 @login_required(login_url='login')
 def updateStatus(request):
@@ -124,7 +137,6 @@ def respon(request, pk):
 			return redirect('pelayanan')
 
 	context = {'pengaduan': pengaduan, 'pengaduan2':pengaduan2, 'act':'pelayanan', 'respon': respon, 'form':form}
-
 	return render(request, 'detail_pelayanan.html', context)
 
 @login_required(login_url='login')

@@ -41,6 +41,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{% url 'pengsel' %}" class="nav-link {% if act == 'pengsel' %} active {% endif %}">
+                  <i class="nav-icon fas fa-boxes"></i>
+                  <p>Pengaduan Selesai</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{% url 'kategori' %}" class="nav-link {% if act == 'kategori' %} active {% endif %}">
                   <i class="nav-icon fas fa-cubes"></i>
                   <p>Kategori</p>
@@ -55,7 +61,7 @@
               <li class="nav-item">
                 <a href="{% url 'accounts' %}" class="nav-link {% if act == 'accounts' %} active {% endif %}">
                   <i class="nav-icon fas fa-user"></i>
-                  <p>Profile Admin</p>
+                  <p>Admin</p>
                 </a>
               </li>
               {% endif %}

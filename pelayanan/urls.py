@@ -4,6 +4,7 @@ from .views import *
 
 urlpatterns = [
     path('', pelayanan, name='pelayanan'),
+    path('pengaduan-selesai', views.pengsel, name="pengsel"),
     path('pelayanan/update', views.updateStatus, name="updatestatus"),
     path('pelayanan/filter/', views.filterpelayanan, name='filterpelayanan'),
     path('editstatus/<str:pk>/', views.editstatus, name='editstatus'),

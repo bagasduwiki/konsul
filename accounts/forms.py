@@ -9,7 +9,7 @@ class AdminForm(ModelForm):
     class Meta:
         model = Admin
         fields = '__all__'
-        exclude = ['user', 'profile_pict']
+        exclude = ['profile_pict']
 
 class ClientForm(ModelForm):
     class Meta:

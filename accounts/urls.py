@@ -4,6 +4,9 @@ from .views import *
 
 urlpatterns = [
     path('', accounts, name='accounts'),
+    path('tambahadmin/', views.tambahadmin, name='tambahadmin'),
+    path('dataadmin/', views.tambahdata, name='tambahdata'),
+
     path('daftarclient/', views.daftarclient, name='daftarclient'),
     path('daftarclient/tambahuser/', views.tambahuser, name='tambahuser'),
     path('daftarclient/tambahclient/', views.tambahclient, name='tambahclient'),
