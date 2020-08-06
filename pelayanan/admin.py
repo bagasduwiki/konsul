@@ -5,3 +5,4 @@ from .models import *
 admin.site.register(Pengaduan)
 admin.site.register(Pengaduans)
 admin.site.register(Respons)
+admin.site.register(Chat)

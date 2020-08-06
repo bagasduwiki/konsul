@@ -50,70 +50,97 @@
           </div>
         </div>
 
-        <div class="card direct-chat direct-chat-primary">
-              <div class="card-header">
-                <h3 class="card-title">Percakapan</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <!-- Conversations are loaded here -->
-                <div class="direct-chat-messages">
-                  <!-- Message. Default to the left -->
-                  <div class="direct-chat-msg">
-                    <div class="direct-chat-infos clearfix">
-                      <span class="direct-chat-name float-left">User</span>
-                    </div>
-                    <img class="direct-chat-img" src="{% static 'img/user6-128x128.jpg' %}" alt="message user image">
-                    <!-- /.direct-chat-infos -->
-                    <div class="direct-chat-text">
-                      {{pengaduan.keluhan}}
-                    </div>
-                    <!-- <span class="direct-chat-timestamp float-left">{{pengaduan.date_created}}</span> -->
-                    <!-- /.direct-chat-text -->
-                  </div>
-                  <!-- /.direct-chat-msg -->
-
-                  <!-- Message to the right -->
-                  {% if pengaduan.respon is not None %}
-                  <div class="direct-chat-msg right">
-                    <div class="direct-chat-infos clearfix">
-                      <span class="direct-chat-name float-right">Admin</span>
-                    </div>
-                    <img class="direct-chat-img" src="{% static 'img/user1-128x128.jpg' %}" alt="message user image">
-                    <!-- /.direct-chat-infos -->
-                    <div class="direct-chat-text">
-                      {{pengaduan.respon}}
-                    </div>
-                    <!-- <span class="direct-chat-timestamp float-right">{{pengaduan.date_created}}</span> -->
-                  </div>
-                  {% else %}
-                  <div class="direct-chat-msg right">
-                  </div>
-                  {% endif %}
-
-                </div>
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer">
-                <form action="#" method="post">
-                  {% csrf_token %}
-                  <div class="input-group">
-                    {{form.respon}}
-                    <span class="input-group-append">
-                      <button type="submit" class="btn btn-primary">Send</button>
-                    </span>
-                  </div>
-                </form>
-              </div>
-              <!-- /.card-footer-->
+        <div class="card">
+          <div class="card-header form-inline">
+            Percakapan
+            <div class="ml-auto" style="width: max-content">
+              <button class="btn btn-info" id="refresh_chat">Refresh</button>
             </div>
-
+          </div>
+          <div id="chat_wrapper">
+            <div class="overflow-auto" id="chat-scroll">
+              <div class="card-body" style="max-height: 300px;">
+                {% if chatdata.count < 1 %}
+                  <div class="mx-auto" style="width: max-content;">
+                    Tidak percakapan
+                  </div>
+                {% else %}
+                  {% for i in chatdata %}
+                  <div style="width: max-content; max-width: 70%;">
+                    <div class="card p-2 round-2 bg-secondary mb-0 mt-4">
+                      {{i.text}}
+                    </div>
+                    <small class="text-muted">{{i.sender}}, {{i.created_at}}</small>
+                  </div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <form class="form-inline" id="formpesan">
+              {% csrf_token %}
+              {{formchat.text}}
+              {{formchat.sender.as_hidden}}
+              {{formchat.pengaduan.as_hidden}}
+              <button class="btn btn-success round-0" type="submit">Kirim</button>
+            </form>
+          </div>
+        </div>
         </div>
         </section>
         </div>
 
 //Query All input fields
 <script>
+var element = document.getElementById("chat-scroll");
+  element.scrollTop = element.scrollHeight;
+
+$('#id_text').css("height", "40px");
+$('#id_text').css("overflow", "auto");
+$('#id_text').css("min-width", "90%");
+
+
+function load_chat(){
+  $.ajax({
+      url: "{% url 'getpesan' %}", 
+      data: {
+        'pengaduan': "{{pengaduan.id}}" 
+      },
+    success: function (data) { 
+      $("#chat_wrapper").html(data);
+    }
+  });
+}
+
+$( "#refresh_chat" ).click(function() {
+    load_chat()
+});
+
+$(document).ready(function () {
+$("#formpesan").submit(function (e) {
+  // prevent from normal form behaviour
+
+  e.preventDefault();
+  // serialize the form data  
+
+  var serializedData = $(this).serialize();
+
+  $.ajax({
+    type: 'POST',
+    url: "{% url 'kirimpesan' %}",
+    data: serializedData,
+    success: function (response) {
+      $("#id_text").val("")
+      load_chat()
+    },
+    error: function (response) {
+      console.log(response)
+    }
+  });
+});
+});
+
 var select_fields = document.getElementsByTagName('select')
 
 var input_fields = document.getElementsByTagName('input')

@@ -13,4 +13,6 @@ urlpatterns = [
     path('<str:pk>/delete', views.deletepelayanan, name='deletepelayanan'),
     # path('pelayanan/pelayanandel/<str:pk>/', views.pelayanandel, name='pelayanandel'),
     path('post/<str:pk>', views.respon, name="respon"),
+    path('kirimpesan', views.sendchat, name="kirimpesan"),
+    path('ajax/getpesan', views.getchat, name="getpesan"),
 ]

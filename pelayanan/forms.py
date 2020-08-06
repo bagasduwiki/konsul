@@ -7,6 +7,11 @@ class PelayananForm(ModelForm):
         model = Pengaduans
         fields = '__all__'
 
+class ChatForm(ModelForm):
+    class Meta:
+        model = Chat
+        fields = '__all__'
+
 class DeletePelayananForm(ModelForm):
     class Meta:
         model = Pengaduans

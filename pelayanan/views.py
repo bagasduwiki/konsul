@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -111,8 +111,11 @@ def editstatus(request, pk):
 @allowed_users(allowed_roles=['admin'])
 def detailpelayanan(request, pk):
     pengaduan = Pengaduans.objects.get(id=pk)
+    chatdata = Chat.objects.filter(pengaduan=pk)
     # respon = Respons.objects.get(id=pk)
     form = PelayananForm(instance=pengaduan)
+    formchat = ChatForm(initial={'pengaduan':pengaduan, 'sender':request.user})
+
     if request.method == 'POST':
         form = PelayananForm(request.POST, instance=pengaduan)
         if form.is_valid():
@@ -120,8 +123,23 @@ def detailpelayanan(request, pk):
             messages.success(request, 'Data Berhasil Diubah')
             return redirect('detailpelayanan')
 
-    context = {'pengaduan':pengaduan, 'form':form, 'act':'pelayanan'}
+    context = {'pengaduan':pengaduan, 'form':form, 'act':'pelayanan', 'formchat':formchat, 'chatdata':chatdata}
     return render(request, 'detail_pelayanan.html', context)
+
+def sendchat(request):
+    if request.method == 'POST':
+        formchat = ChatForm(request.POST)
+        if formchat.is_valid():
+            formchat.save()
+            return JsonResponse({"success":True}, status=200)
+        else:
+            return JsonResponse({"success":False}, status=400)
+
+def getchat(request):
+    if request.is_ajax():
+        chatdata = Chat.objects.filter(pengaduan=request.GET.get('pengaduan'))
+        context = {'chatdata': chatdata}
+        return render(request, 'partialchat.html', context)
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])

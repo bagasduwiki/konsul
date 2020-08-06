@@ -5,6 +5,16 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+class Chat(models.Model):
+    pengaduan = models.ForeignKey('Pengaduans', null=True, on_delete=models.SET_NULL)
+    sender = models.CharField(max_length=255 ,null=True, blank=True)
+    text = models.TextField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, auto_now=False, null=False)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.text
+
 class Pengaduan(models.Model):
     client = models.ForeignKey(Client, null=True, on_delete=models.SET_NULL)
     kategori_pengaduan = models.ForeignKey(KategoriPengaduan, null=True, on_delete=models.SET_NULL)
